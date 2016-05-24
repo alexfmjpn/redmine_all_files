@@ -15,4 +15,9 @@ Redmine::Plugin.register :redmine_all_files do
   menu :project_menu, :all_files, { :controller => 'project_attachments', :action => 'index' }, :caption => Proc.new { |project| I18n.t('project_module_all_files') }, :after => :files, :param => :project_id
   menu :top_menu, :all_files, { :controller => 'project_attachments', :action => 'index' }, :caption => Proc.new { |project| I18n.t('project_module_all_files') }, :after => :projects
 end
-
+# разрешение на загрузку файлов
+Redmine::AccessControl.map do |map|
+        map.project_module :repository do |map|
+                map.permission :operations, :repositories => [:entries_operation]
+        end
+end
